@@ -10,6 +10,7 @@
     "migrate": "tsx src/migrate.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.552.0",
     "@clerk/nextjs": "^4.29.12",
     "@langchain/openai": "^0.0.26",
     "@pinecone-database/doc-splitter": "^0.0.1",
@@ -17,6 +18,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-query": "^5.29.0",
+    "ai": "^3.0.20",
     "aws-sdk": "^2.1594.0",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
@@ -28,6 +30,7 @@
     "md5": "^2.3.0",
     "next": "14.1.4",
     "next-themes": "^0.3.0",
+    "openai": "^4.33.0",
     "openai-edge": "^1.2.2",
     "pdf-parse": "^1.1.1",
     "pg": "^8.11.5",
@@ -35,9 +38,9 @@
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
+    "stripe": "^14.25.0",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.7.2"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/md5": "^2.3.5",

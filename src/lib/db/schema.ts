@@ -7,6 +7,7 @@ import {
   varchar,
   pgEnum,
 } from "drizzle-orm/pg-core";
+import { InferSelectModel } from "drizzle-orm";
 
 export const userSystemEnum = pgEnum("user_system", ["user", "system"]);
 
@@ -18,6 +19,7 @@ export const chats = pgTable("chats", {
   usersId: varchar("users_id", { length: 256 }).notNull(),
   fileKey: text("file_key").notNull(),
 });
+export type DBChats = InferSelectModel<typeof chats>;
 
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
@@ -27,4 +29,13 @@ export const messages = pgTable("messages", {
     .notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   role: userSystemEnum("role").notNull(),
+});
+
+export type DBMessages = InferSelectModel<typeof messages>;
+
+//makaynch stripe flmghrib
+export const userSubscriptions = pgTable("user_subscriptions", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id", { length: 256 }).notNull().unique(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });

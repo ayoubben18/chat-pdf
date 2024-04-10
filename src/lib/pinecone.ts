@@ -1,13 +1,12 @@
 import { Pinecone } from "@pinecone-database/pinecone";
-import { downlaodFromS3 } from "./s3-server";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { downloadFromS3 } from "./s3-server";
 import {
   Document,
   RecursiveCharacterTextSplitter,
 } from "@pinecone-database/doc-splitter";
 import { getEmbeddings } from "./embeddings";
 import md5 from "md5";
-import { metadata } from "@/app/layout";
 import { convertToAscii } from "./utils";
 export function getPinecone() {
   const pc = new Pinecone({
@@ -26,11 +25,19 @@ type PDFPage = {
     source: string;
   };
 };
+export type PineconeElement = {
+  id: string;
+  values: number[];
+  metadata: {
+    text: string;
+    pageNumber: string;
+  };
+};
 
 export async function loadS3intoPinecone(file_key: string) {
   // 1 - obtain the pdf -> downlaod and read from the pdf
   console.log("Downloading S3 into file system...");
-  const fileName = await downlaodFromS3(file_key);
+  const fileName = await downloadFromS3(file_key);
   if (!fileName) {
     throw new Error("Could not download file from S3");
   }
@@ -66,14 +73,7 @@ async function embedDocuments(document: Document) {
         text: document.metadata.text,
         pageNumber: document.metadata.pageNumber,
       },
-    } as {
-      id: string;
-      values: number[];
-      metadata: {
-        text: string;
-        pageNumber: string;
-      };
-    };
+    } as PineconeElement;
   } catch (error) {
     console.log("Error embedding document", error);
     throw error;
